@@ -14,13 +14,13 @@ import ConnectionStatus from './components/ConnectionStatus';
 import ConnectButton from './components/ConnectButton';
 import Avatar from './components/Avatar';
 
-const tld = '.hodl';
+const tld = '.brock';
 
 // Constants
 const TWITTER_HANDLE = '_buildspace';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const CONTRACT_ADDRESS = '0x98d115e898D84A4255b21B18958820E6e3c57d6b';
-const REVERSE_ADDRESS = '0x73D38666dF4F165189cb8124Be1Ac636a5bCe8b5';
+const CONTRACT_ADDRESS = '0x30bCD58beba88576B3b57ff9df4C9394baf66852';
+const REVERSE_ADDRESS = '0x59E2917C7413d5EB30596AE5FaDDF7CD9921540f';
 
 export type Record = {
   avatar: string;
@@ -51,7 +51,7 @@ const App = () => {
 
   useEffect(() => {
     //@ts-ignore
-    if (networks[chainId?.toString(16)] === 'Polygon Mumbai Testnet') {
+    if (networks[chainId?.toString(16)] === 'Bitrock Mainnet') {
       fetchMints();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,10 +75,10 @@ const App = () => {
   const switchNetwork = async () => {
     if (account) {
       try {
-        // Try to switch to the Mumbai testnet
+        // Try to switch to the Bitrock Mainnet
         await library.send(
           'wallet_switchEthereumChain',
-          [{ chainId: '0x13881' }] // Check networks.js for hexadecimal network ids
+          [{ chainId: '0x1c03' }] // Check networks.js for hexadecimal network ids
         );
       } catch (error: any) {
         console.log(error);
@@ -88,15 +88,15 @@ const App = () => {
           try {
             await library.send('wallet_addEthereumChain', [
               {
-                chainId: '0x13881',
-                chainName: 'Polygon Mumbai Testnet',
-                rpcUrls: ['https://rpc-mumbai.matic.today'],
-                nativeCurrency: {
-                  name: 'Mumbai Matic',
-                  symbol: 'MATIC',
-                  decimals: 18
+                chainId: "0x1c03",
+                  chainName: "Bitrock Mainnet",
+                  rpcUrls: ["https://connect.bit-rock.io"],
+                  nativeCurrency: {
+                    name: "Bitrock",
+                    symbol: "BROCK",
+                    decimals: 18,
                 },
-                blockExplorerUrls: ['https://mumbai.polygonscan.com/']
+                blockExplorerUrls: ['https://explorer.bit-rock.io/']
               }
             ]);
           } catch (error) {
@@ -127,7 +127,7 @@ const App = () => {
           records.description
         );
         await tx.wait();
-        console.log('Record set https://mumbai.polygonscan.com/tx/' + tx.hash);
+        console.log('Record set https://explorer.bit-rock.io/tx/' + tx.hash);
 
         fetchMints();
         setRecords(undefined);
@@ -199,7 +199,7 @@ const App = () => {
 
         // Check if the transaction was successfully completed
         if (receipt.status === 1) {
-          console.log('Domain minted! https://mumbai.polygonscan.com/tx/' + tx.hash);
+          console.log('Domain minted! https://explorer.bit-rock.io/tx/' + tx.hash);
 
           setTimeout(() => {
             fetchMints();
@@ -258,10 +258,10 @@ const App = () => {
 
   const renderInputForm = () => {
     //@ts-ignore
-    if (networks[chainId?.toString(16)] !== 'Polygon Mumbai Testnet') {
+    if (networks[chainId?.toString(16)] !== 'Bitrock Mainnet') {
       return (
         <div className="connect-wallet-container">
-          <h2>Please switch to Polygon Mumbai Testnet</h2>
+          <h2>Please switch to Bitrock Mainnet</h2>
           {/* This button will call our switch network function */}
           <button className="cta-button mint-button" onClick={switchNetwork}>
             Click here to switch
@@ -387,8 +387,8 @@ const App = () => {
         <div className="header-container">
           <header>
             <div className="left">
-              <p className="title">💰🕘 HODL Name Service</p>
-              <p className="subtitle">Your immortal API on the blockchain!</p>
+              <p className="title">Brock Name Service</p>
+              <p className="subtitle">Your immortal API on the Bitrock Mainnet!</p>
             </div>
             <ConnectionStatus />
           </header>
